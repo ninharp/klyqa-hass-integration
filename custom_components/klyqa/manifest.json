@@ -1,0 +1,18 @@
+{
+  "domain": "klyqa",
+  "name": "Klyqa Integration v2",
+  "codeowners": [
+    "@m-sauer",
+    "@ninharp"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/klyqa",
+  "homekit": {},
+  "iot_class": "local_polling",
+  "quality_scale": "platinum",
+  "requirements": ["zeroconf", "aiohttp", "requests", "klyqa>=1.0.3"],
+  "ssdp": [],
+  "version": "0.0.4",
+  "zeroconf": ["_qcxrest._tcp.local."]
+}

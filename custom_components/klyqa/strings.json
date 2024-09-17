@@ -1,0 +1,32 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Do you want to manually add a Klyqa Light to Home Assistant?",
+        "title": "Manually add Klyqa device",
+        "data": {
+          "host": "Hostname/IP of the device",
+          "port": "REST port of the device",
+          "access_token": "access token for the device"
+        }
+      },
+      "zeroconf_confirm": {
+        "description": "Do you want to add the Klyqa Light `{name}` to Home Assistant?",
+        "title": "Discovered Klyqa device",
+        "data": {
+          "username": "The username to login to Klyqa Cloud",
+          "password": "The password to login to Klyqa Cloud"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "device_not_found": "Cannot find device in your account!\n\nDo you chose the correct account?",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  }
+}

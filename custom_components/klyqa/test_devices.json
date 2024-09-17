@@ -1,0 +1,83 @@
+[
+  {
+    "fade": {
+      "in": 0,
+      "out": 0
+    },
+    "name": "Strype Basic p",
+    "ssid": "ninIOT",
+    "state": {
+      "@core/state/active-slot-rgb": 1
+    },
+    "aesKey": "cd7f165da36cd19b2ac3484f4dc33264",
+    "debugId": "reduxDispatcher2",
+    "createdAt": 1725370353142,
+    "productId": "@klyqa.lighting.kl-rgbc3.rgbcw",
+    "updatedAt": 1725616370632,
+    "accessToken": "6ea6d4d779acce87c7cf",
+    "cloudDeviceId": "0081bb50-69f9-11ef-a75e-79267f3cb7d2",
+    "localDeviceId": "806599881770",
+    "openSlotCount": 15,
+    "manufacturerId": "983395f9-2877-497e-950b-c8a952066002",
+    "firmwareVersion": "V2.0.1.99",
+    "routineInfoList": [
+      {
+        "id": 0,
+        "scene": "102"
+      }
+    ],
+    "slotTrackStatus": "local",
+    "hardwareRevision": "2",
+    "onboardingComplete": true,
+    "routineInfoUpdatedAt": 1723709803299,
+    "isWifiSignalStrengthIndicatorVisible": true
+  },
+  {
+    "fade": {
+      "in": 0,
+      "out": 0
+    },
+    "name": "E27",
+    "ssid": "ninIOT",
+    "state": {
+      "@core/state/active-slot-rgb": 0
+    },
+    "aesKey": "9aab6c368e2784e4b704a29cc469e67e",
+    "debugId": "reduxDispatcher2",
+    "createdAt": 1725619289110,
+    "productId": "@klyqa.lighting.rgb-cw-ww.e27-dev",
+    "updatedAt": 1725619946339,
+    "accessToken": "5eed1bd873894b64678a",
+    "cloudDeviceId": "e930a960-6c3d-11ef-a75e-79267f3cb7d2",
+    "localDeviceId": "286DCD5C735A",
+    "openSlotCount": 16,
+    "manufacturerId": "983395f9-2877-497e-950b-c8a952066001",
+    "firmwareVersion": "V1.1.1.2007-dev",
+    "slotTrackStatus": "device",
+    "hardwareRevision": "2",
+    "onboardingComplete": true
+  },
+  {
+    "fade": {
+      "in": 0,
+      "out": 0
+    },
+    "name": "Lampe 3",
+    "ssid": "ninIOT",
+    "state": {},
+    "aesKey": "d525a539690066d109297ba8ceb1d02c",
+    "debugId": "enableCloudConnectionOnDevice onboardinMachine x7xyqxmyof8ujv7m5ja6r6x",
+    "createdAt": 1726057449875,
+    "productId": "@klyqa.lighting.rgb-cw-ww.e27-dev",
+    "updatedAt": 1726057482439,
+    "accessToken": "ace1c34d03e983d1150b",
+    "cloudDeviceId": "d262bb20-7038-11ef-a75e-79267f3cb7d2",
+    "localDeviceId": "286DCD5C681F",
+    "openSlotCount": 16,
+    "manufacturerId": "983395f9-2877-497e-950b-c8a952066001",
+    "firmwareVersion": "V1.1.1.2008",
+    "slotTrackStatus": "device",
+    "hardwareRevision": "2",
+    "onboardingComplete": true
+  }
+]

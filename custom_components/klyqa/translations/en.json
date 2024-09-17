@@ -1,0 +1,34 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "access_token": "Access Token for the device",
+                    "host": "Host",
+                    "password": "Password",
+                    "username": "Username"
+                }
+            },
+            "zeroconf_confirm": {
+                "data": {
+                    "password": "Password",
+                    "username": "Username"
+                },
+                "data_description": {
+                    "password": "The password to login to Klyqa Cloud",
+                    "username": "The username to login to Klyqa Cloud"
+                },
+                "description": "Do you want to add the Klyqa Light `{name}` to Home Assistant?",
+                "title": "Discovered Klyqa device"
+            }
+        }
+    }
+}
