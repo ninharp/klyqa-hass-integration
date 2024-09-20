@@ -11,8 +11,8 @@
   "homekit": {},
   "iot_class": "local_polling",
   "quality_scale": "platinum",
-  "requirements": ["zeroconf", "aiohttp", "requests", "klyqa>=1.0.3"],
+  "requirements": ["zeroconf", "aiohttp", "requests", "klyqa>=1.0.9"],
   "ssdp": [],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "zeroconf": ["_qcxrest._tcp.local."]
 }

@@ -8,6 +8,7 @@ import voluptuous as vol
 
 from homeassistant.components import onboarding, zeroconf
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.helpers.selector import selector
 from homeassistant.const import (
     CONF_ACCESS_TOKEN,
     CONF_HOST,
@@ -16,12 +17,13 @@ from homeassistant.const import (
     CONF_PASSWORD,
     CONF_PORT,
     CONF_USERNAME,
+    CONF_EXTERNAL_URL,
 )
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from klyqa.cloud import KlyqaCloud
 from klyqa.device import KlyqaDevice
-from klyqa.exceptions import KlyqaError
+from klyqa.exceptions import KlyqaError, KlyqaConnectionError, KlyqaDeviceNotFoundError
 
 from .const import DOMAIN, LOGGER
 
@@ -37,6 +39,7 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
     device_id: str | None = None
     device_name: str | None = "Klyqa Device"
     service_name: str | None = None
+    product_name: str | None = None
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -89,6 +92,7 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
 
         self.host = discovery_info.host
         self.device_id = discovery_info.properties.get("localDeviceId")
+        self.product_name = discovery_info.properties.get("productName")
         self.port = discovery_info.port or 3333
 
         LOGGER.debug(f"KLYQA KlyqaConfigFlow local device id {self.device_id}")
@@ -96,10 +100,14 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
         if not onboarding.async_is_onboarded(self.hass):
             return self._async_create_entry()
 
+        device_name = self.device_id
+        if self.product_name:
+            device_name = self.product_name
+
         self._set_confirm_only()
         self.context.update(
             {
-                "title_placeholders": {"name": self.device_id},
+                "title_placeholders": {"name": device_name},
                 "configuration_url": f"http://{self.host}",
             }
         )
@@ -115,19 +123,27 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None or not onboarding.async_is_onboarded(self.hass):
             LOGGER.debug(f"KLYQA user_input {user_input}")
             LOGGER.debug(f"KLYQA device name: {self.device_name}")
+            base_url = "https://app-api.prod.qconnex.io"
+            if user_input["backend"] == "test":
+                base_url = "https://app-api.test.qconnex.io"
+
             try:
-                cloud = KlyqaCloud(user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
+                cloud = KlyqaCloud(
+                    user_input[CONF_USERNAME],
+                    user_input[CONF_PASSWORD],
+                    base_url=base_url,
+                )
                 await cloud.login()
-            except Exception:
+            except KlyqaConnectionError:
                 return self.async_abort(reason="invalid_auth")
 
             try:
                 self.access_token = await cloud.get_device_access_token(self.device_id)
-            except KlyqaError:
+                self.device_name = await cloud.get_device_name(self.device_id)
+            except KlyqaDeviceNotFoundError:
                 await cloud.close()
                 return self.async_abort(reason="device_not_found")
 
-            self.device_name = await cloud.get_device_name(self.device_id)
             await cloud.close()
 
             try:
@@ -143,6 +159,7 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_MAC: self.device_id,
                     CONF_ACCESS_TOKEN: self.access_token,
                     CONF_NAME: self.device_name,
+                    CONF_EXTERNAL_URL: base_url,
                 },
             )
 
@@ -150,6 +167,13 @@ class KlyqaConfigFlow(ConfigFlow, domain=DOMAIN):
             vol.Required(CONF_USERNAME): str,
             vol.Required(CONF_PASSWORD): str,
         }
+        data_schema["backend"] = selector(
+            {
+                "select": {
+                    "options": ["production", "test"],
+                }
+            }
+        )
         return self.async_show_form(
             step_id="zeroconf_confirm",
             description_placeholders={"name": self.device_id},

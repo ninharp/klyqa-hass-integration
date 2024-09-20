@@ -27,11 +27,11 @@ class KlyqaEntity(CoordinatorEntity[KlyqaDataUpdateCoordinator]):
             identifiers={(DOMAIN, coordinator.data.info.device_id)},
             serial_number=coordinator.data.info.device_id,
             manufacturer="Klyqa",
-            model=coordinator.data.info.product_id,
+            model=coordinator.data.info.product_name,
             name=coordinator.data.info.service_name,
             sw_version=f"{coordinator.data.info.firmware_version}",
             hw_version=str(coordinator.data.info.hardware_revision),
-            # model_id=coordinator.data.info.product_id,
+            model_id=coordinator.data.info.product_id,
             modified_at=coordinator.data.info.firmware_date,
         )
         if (mac := coordinator.config_entry.data.get(CONF_MAC)) is not None:
